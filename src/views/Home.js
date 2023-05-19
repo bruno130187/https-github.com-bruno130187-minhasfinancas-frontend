@@ -16,7 +16,7 @@ function Home() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const usuario_logado = auth.usuarioAutenticado.id;
+        const usuario_logado = auth?.usuarioAutenticado?.id;
 
         if (usuario_logado !== null && usuario_logado !== undefined) {
             service.obterSaldoPorUsuario(usuario_logado)
@@ -31,13 +31,13 @@ function Home() {
             setSaldo("#");
         }
 
-    }, []);
+    }, [auth]);
 
     return (
         <div className="css-jumbo">
             <h1 className="display-3">Bem vindo!</h1><br />
             <h4 className="lead">Esse é seu sistema de finanças.</h4>
-            <h4 className="lead">Seu saldo para o mês atual é de {saldo} .</h4>
+            <h4 className="lead">Seu saldo atual é de {saldo} .</h4>
             <hr className="my-4" />
             <h5>E essa é sua área administrativa, utilize um dos menus ou botões abaixo para navegar pelo sistema.</h5>
             <div className="btn-group d-flex justify-content-center" role="group">

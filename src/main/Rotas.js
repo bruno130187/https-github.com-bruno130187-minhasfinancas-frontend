@@ -9,22 +9,24 @@ import CadastroLancamentos from "../views/lancamentos/CadastroLancamentos";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Navbar from "../components/Navbar";
 import NotFound from "../components/NotFound";
+import CountDownTimerForm from "../components/CountDownTimerForm";
 
 function Rotas() {
     return (
         <Routes>
-            <Route path="/login"                         element={<Login /> }>              </Route>
-            <Route path="/"                              element={<LandingPage /> }>        </Route>
-            <Route path="/cadastro-usuario"              element={<CadastroUsuario /> }>    </Route>
-            <Route path="/navbar"                        element={<Navbar /> }>             </Route>
+            <Route path="/login"                          element={<Login /> }>                    </Route>
+            <Route path="/"                               element={<LandingPage /> }>              </Route>
+            <Route path="/cadastro-usuario"               element={<CadastroUsuario /> }>          </Route>
+            <Route path="/navbar"                         element={<Navbar /> }>                   </Route>
+            <Route path="/count"                          element={<CountDownTimerForm /> }>       </Route>
 
             <Route element={<ProtectedRoutes />}>
-                <Route path="/home"                       element={<Home /> }>               </Route>
-                <Route path="/consulta-lancamentos"       element={<ConsultaLancamentos /> }></Route>
-                <Route path="/cadastro-lancamentos/:id?"  element={<CadastroLancamentos /> }></Route>
+                <Route exact path="/home"                       element={<Home /> }>               </Route>
+                <Route exact path="/consulta-lancamentos"       element={<ConsultaLancamentos /> }></Route>
+                <Route exact path="/cadastro-lancamentos/:id?"  element={<CadastroLancamentos /> }></Route>
             </Route>
 
-            <Route path="*"                                element={<NotFound /> }>          </Route>
+            <Route path="*"                               element={<NotFound /> }>                 </Route>
         </Routes>
     );
 }

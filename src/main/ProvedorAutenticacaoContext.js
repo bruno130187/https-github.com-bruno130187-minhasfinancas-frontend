@@ -25,7 +25,7 @@ function AuthProvider({ children }) {
             nome: claims.nome,
             email: claims.sub
         }
-        authService.logar(usuario.id, token);
+        authService.logar(usuario, token);
         setAuth({ isAutenticado: true, usuarioAutenticado: usuario });
         mensagemSucesso("Login efetuado com sucesso!");
     }

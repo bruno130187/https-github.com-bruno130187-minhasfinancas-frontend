@@ -84,6 +84,7 @@ class LancamentoService extends ApiService {
     }
 
     consultar(lancamentoFiltro) {
+        //console.log("LancamentoService:", lancamentoFiltro);
         let params = `?ano=${lancamentoFiltro.ano}`;
 
         if(lancamentoFiltro.mes) {
@@ -99,7 +100,7 @@ class LancamentoService extends ApiService {
         }
 
         if(lancamentoFiltro.usuario) {
-            params = `${params}&usuario=${lancamentoFiltro.usuario}`;
+            params = `${params}&usuario=${lancamentoFiltro.usuario.id}`;
         }
 
         if(lancamentoFiltro.descricao) {

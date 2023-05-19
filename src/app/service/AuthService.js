@@ -18,6 +18,16 @@ class AuthService {
         return !isTokenInvalido;
     }
 
+    getExpirationTokenPlusNow() {
+        var date = new Date(0);
+        const token = LocalStorageService.obterItem(TOKEN);
+        if(!token){
+            return 0;
+        }
+        date.setUTCSeconds(jwtDecode(token).exp);
+        return date;
+    }
+
     removerUsuarioAutenticado() {
         LocalStorageService.removerItem(USUARIO_LOGADO);
         LocalStorageService.removerItem(TOKEN);

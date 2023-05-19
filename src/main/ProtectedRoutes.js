@@ -1,10 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useMemo } from 'react';
 import { Navigate, Outlet } from 'react-router';
-import { ProvedorAutenticacaoContext } from "../main/ProvedorAutenticacaoContext";
+import AuthService from '../app/service/AuthService';
 
-function ProtectedRoutes() {
-    const { auth } = useContext(ProvedorAutenticacaoContext);
-    return auth.isAutenticado ? <Outlet /> : <Navigate to={'/login'} />;
+const ProtectedRoutes = () => {
+    const authService = useMemo(() => {
+        return new AuthService();
+    }, []);
+    const isAutenticado = authService.isUsuarioAutenticado();
+    return isAutenticado ? <Outlet /> : <Navigate to={'/login'} />;
 };
 
 export default ProtectedRoutes;

@@ -36,7 +36,7 @@ function ConsultaLancamentos() {
     useEffect(() => {
         const dataAtual = new Date();
         setState((state) => ({ ...state, ano: dataAtual.getFullYear() }));
-        setState((state) => ({ ...state, mes: dataAtual.getMonth()+1 }));
+        setState((state) => ({ ...state, mes: dataAtual.getMonth() + 1 }));
         setState((state) => ({ ...state, meses: service.obterListaMeses() }));
         setState((state) => ({ ...state, tipos: service.obterListaTipos() }));
         setState((state) => ({ ...state, statusLista: service.obterListaStatus() }));
@@ -98,7 +98,7 @@ function ConsultaLancamentos() {
                 const index = lancamentos.indexOf(state.lancamentoDeletar);
                 lancamentos.splice(index, 1);
                 setState({ ...state, lancamentos: lancamentos, showConfirmDialog: false });
-                mensagemSucesso('Lançamento deletado com sucesso!');
+                mensagemSucesso(`Lançamento ${state.lancamentoDeletar.descricao} deletado com sucesso!`);
             }).catch(error => {
                 mensagemErro('Ocorreu um erro ao tentar deletar o Lançamento');
             });
@@ -119,7 +119,7 @@ function ConsultaLancamentos() {
                     lancamentos[index] = lancamento;
                     setState({ ...state, lancamento });
                 }
-                mensagemSucesso("Status atualizado com sucesso!");
+                mensagemSucesso(`Status de ${lancamento.descricao} atualizado com sucesso!`);
             });
     }
 
@@ -135,7 +135,7 @@ function ConsultaLancamentos() {
     return (
         <Card title="Consulta Lançamentos">
             <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-6" style={{ position: 'relative', margin: '0 auto' }}>
                     <div className="bs-component">
                         <FormGroup htmlFor="inputAno" label="Ano: *">
                             <input type="number"

@@ -32,6 +32,8 @@ function CadastroLancamentos(props) {
 
     const routeParams = useParams();
 
+    console.log('state', state);
+
     useEffect(() => {
         const dataAtual = new Date();
         setState((state) => ({ ...state, ano: dataAtual.getFullYear() }));
@@ -64,7 +66,7 @@ function CadastroLancamentos(props) {
 
         const { descricao, valor, mes, ano, tipo } = state;
 
-        const lancamento = { descricao, valor, mes, ano, tipo, usuario: usuarioLogado };
+        const lancamento = { descricao, valor, mes, ano, tipo, usuario: usuarioLogado.id };
 
         const erros = service.validar(lancamento);
 
@@ -81,7 +83,7 @@ function CadastroLancamentos(props) {
             .salvar(lancamento)
             .then(response => {
                 navigate("/consulta-lancamentos");
-                mensagemSucesso('Lançamento cadastrado com sucesso!');
+                mensagemSucesso(`Lançamento ${lancamento.descricao} cadastrado com sucesso!`);
             }).catch(error => {
                 mensagemErro(error.response.data);
             })
@@ -98,6 +100,7 @@ function CadastroLancamentos(props) {
             erros.forEach(erro => mensagemErro(erro));
             return false;
         } else {
+            lancamento.valor = lancamento.valor + '';
             if (lancamento.valor.indexOf(',') !== -1) {
                 lancamento.valor = lancamento.valor.replaceAll('.', '').replaceAll(',', '.');
             }
@@ -107,7 +110,7 @@ function CadastroLancamentos(props) {
             .atualizar(lancamento)
             .then(response => {
                 navigate("/consulta-lancamentos");
-                mensagemSucesso('Lançamento atualizado com sucesso!');
+                mensagemSucesso(`Lançamento ${lancamento.descricao} atualizado com sucesso!`);
             }).catch(error => {
                 mensagemErro(error.response.data);
             })
@@ -136,7 +139,7 @@ function CadastroLancamentos(props) {
                 <div className="col-md-6">
                     <FormGroup id="inputAno" label="Ano: *">
                         <input id="inputAno"
-                            type="text"
+                            type="number"
                             name="ano"
                             value={state.ano}
                             onChange={handleChange}

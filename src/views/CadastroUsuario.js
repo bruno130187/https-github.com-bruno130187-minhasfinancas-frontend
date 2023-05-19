@@ -39,7 +39,7 @@ function CadastroUsuario() {
 
         service.salvar(usuario)
             .then(response => {
-                mensagemSucesso("Usuário cadastrado com sucesso! Faça o login para acessar o sistema!");
+                mensagemSucesso(`Usuário ${usuario.nome}(${usuario.email}) cadastrado com sucesso! Faça o login para acessar o sistema!`);
                 navigate("/login");
             }).catch(erro => {
                 mensagemErro(erro.response.data);
@@ -47,10 +47,10 @@ function CadastroUsuario() {
     }
 
     return (
-        <div className="container">
+        <div className="container" style={{maxWidth: '800px'}}>
             <Card title="Cadastro de usuário">
                 <div className="row">
-                    <div className="col-lg-6">
+                    <div className="col-md-12" style={{ position: 'relative', margin: '0 auto' }}>
                         <div className="bs-component">
                             <FormGroup label="Nome: *" htmlFor="exampleInputName1">
                                 <input type="text"

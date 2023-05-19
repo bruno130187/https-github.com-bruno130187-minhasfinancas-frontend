@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import NavbarItem from './NavbarItem';
 import { ProvedorAutenticacaoContext } from "../main/ProvedorAutenticacaoContext";
 import { useNavigate, NavLink } from 'react-router-dom';
+import CountDownTimer from './CountDownTimer';
 
 function Navbar() {
 
@@ -21,12 +22,15 @@ function Navbar() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav">
-                        <NavbarItem render={true}               address="/"                               label="Landing" />
-                        <NavbarItem render={auth.isAutenticado} address="/home"                           label="Home" />
-                        <NavbarItem render={auth.isAutenticado} address="/cadastro-usuario"               label="Usuários" />
-                        <NavbarItem render={auth.isAutenticado} address="/consulta-lancamentos"           label="Lançamentos" />
-                        <NavbarItem render={true}               address="/login" onClick={encerrarSessao} label={auth.isAutenticado ? 'Sair' : 'Login'} />
+                        <NavbarItem render={true} address="/" label="Landing" />
+                        <NavbarItem render={auth.isAutenticado} address="/home" label="Home" />
+                        <NavbarItem render={auth.isAutenticado} address="/cadastro-usuario" label="Usuários" />
+                        <NavbarItem render={auth.isAutenticado} address="/consulta-lancamentos" label="Lançamentos" />
+                        <NavbarItem render={true} address="/login" onClick={encerrarSessao} label={auth.isAutenticado ? 'Sair' : 'Login'} />
                     </ul>
+                </div>
+                <div className="countdown-container" title="Tempo de sessão">
+                    <CountDownTimer />
                 </div>
             </div>
         </div>

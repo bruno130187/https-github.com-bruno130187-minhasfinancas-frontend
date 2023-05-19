@@ -9,7 +9,6 @@ import CadastroLancamentos from "../views/lancamentos/CadastroLancamentos";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Navbar from "../components/Navbar";
 import NotFound from "../components/NotFound";
-import CountDownTimerForm from "../components/CountDownTimerForm";
 
 function Rotas() {
     return (
@@ -18,7 +17,6 @@ function Rotas() {
             <Route path="/"                               element={<LandingPage /> }>              </Route>
             <Route path="/cadastro-usuario"               element={<CadastroUsuario /> }>          </Route>
             <Route path="/navbar"                         element={<Navbar /> }>                   </Route>
-            <Route path="/count"                          element={<CountDownTimerForm /> }>       </Route>
 
             <Route element={<ProtectedRoutes />}>
                 <Route exact path="/home"                       element={<Home /> }>               </Route>

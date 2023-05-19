@@ -1,11 +1,12 @@
+import React, { useContext } from 'react';
 import CountDownDisplay from './CountDownDisplay';
 import UseCountDown from '../app/service/UseCountDown';
+import { ProvedorAutenticacaoContext } from "../main/ProvedorAutenticacaoContext";
 
 const ExpiredNotice = () => {
   return (
     <div className="expired-notice">
-      <span>Expired!!!</span>
-      <p>Please select a future date and time.</p>
+      <span>Sessão expirada!</span>
     </div>
   );
 };
@@ -15,26 +16,34 @@ const ShowCounter = ({ minutes, seconds }) => {
     <div className="show-counter">
       <a
         className="countdown-link"
-        href="https://tapasadhikary.com"
+        href='#'
         rel="noopener noreferrer"
         target="_blank"
       >
-        <CountDownDisplay isDanger={false} type="Mins" value={minutes} />
+        <CountDownDisplay isDanger={false} type="min" value={minutes} />
         <p>:</p>
-        <CountDownDisplay isDanger={false} type="Seconds" value={seconds} />
+        <CountDownDisplay isDanger={false} type="seg" value={seconds} />
       </a>
     </div>
   );
 };
 
-const CountDownTimer = ({ targetDate }) => {
-  const [minutes, seconds] = UseCountDown(targetDate);
+const CountDownTimer = () => {
+  const { auth, encerrarSessao } = useContext(ProvedorAutenticacaoContext);
 
-  if (minutes + seconds <= 0) {
-    return <ExpiredNotice />;
-  } else {
-    return <ShowCounter minutes={minutes} seconds={seconds} />;
+  var minutes = null;
+  var seconds = null;
+
+  [minutes, seconds] = UseCountDown(new Date(auth.expiration));
+
+  if (auth.expiration !== null && auth.expiration !== undefined) {
+    if ((minutes + seconds) === 0) {
+      encerrarSessao();
+    } else {
+      return <ShowCounter minutes={minutes} seconds={seconds} />;
+    }
   }
+
 };
 
 export default CountDownTimer;

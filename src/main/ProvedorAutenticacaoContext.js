@@ -14,7 +14,8 @@ function AuthProvider({ children }) {
     const [auth, setAuth] = useState({
         usuarioAutenticado: null,
         isAutenticado: false,
-        isLoading: true
+        isLoading: true,
+        expiration: null
     });
 
     const iniciarSessao = (tokenDTO) => {
@@ -26,16 +27,23 @@ function AuthProvider({ children }) {
             email: claims.sub
         }
         authService.logar(usuario, token);
-        setAuth({ isAutenticado: true, usuarioAutenticado: usuario });
+        const exp = authService.getExpirationTokenPlusNow();
+        setAuth({ isAutenticado: true, usuarioAutenticado: usuario, expiration: exp });
         mensagemSucesso("Login efetuado com sucesso!");
     }
 
     const encerrarSessao = () => {
         if (authService.obterUsuarioAutenticado() !== null && authService.obterUsuarioAutenticado() !== '') {
             authService.removerUsuarioAutenticado();
-            setAuth({ isAutenticado: false, usuarioAutenticado: null, isLoading: false });
+            setAuth({ isAutenticado: false, usuarioAutenticado: null, isLoading: false, expiration: null });
             mensagemAlerta("Logoff efetuado com sucesso!");
         }
+    }
+
+    const getExpiration = () => {
+        const exp = authService.getExpirationTokenPlusNow();
+        console.log('exp: ', exp);
+        setAuth({ ...auth, expiration: exp});
     }
 
     useEffect(() => {
@@ -43,9 +51,10 @@ function AuthProvider({ children }) {
                 const isAutenticado = authService.isUsuarioAutenticado();
                 if (isAutenticado) {
                     const usuario = authService.refreshSession();
-                    setAuth({ isAutenticado: true, usuarioAutenticado: usuario, isLoading: false });
+                    const exp = authService.getExpirationTokenPlusNow();
+                    setAuth({ isAutenticado: true, usuarioAutenticado: usuario, isLoading: false, expiration: exp });
                 } else {
-                    setAuth({ ...auth, isLoading: false });
+                    setAuth({ ...auth, isLoading: false, expiration: null });
                 }
             }
     }, []);
